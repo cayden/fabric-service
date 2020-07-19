@@ -28,6 +28,18 @@
 			<artifactId>fabric-gateway-java</artifactId>
 			<version>1.4.4</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.apache.logging.log4j</groupId>-->
+<!--			<artifactId>log4j-slf4j-impl</artifactId>-->
+<!--			<version>2.13.0</version>-->
+<!--		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

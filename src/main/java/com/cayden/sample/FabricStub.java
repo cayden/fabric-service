@@ -25,7 +25,7 @@ public class FabricStub {
         public FabricDriverTest() {
             FabricStubFactory fabricStubFactory = new FabricStubFactory();
             driver = fabricStubFactory.newDriver();
-            connection = fabricStubFactory.newConnection("classpath:stubs/fabric");
+            connection = fabricStubFactory.newConnection("classpath:fabric");
             account =
                     fabricStubFactory.newAccount("fabric_user1", "classpath:accounts/fabric_user1");
             resourceInfo = new ResourceInfo();
