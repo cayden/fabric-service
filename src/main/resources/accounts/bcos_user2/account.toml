@@ -1,0 +1,4 @@
+[account]
+    type='BCOS2.0'
+    accountFile='account.key'
+    password=''
