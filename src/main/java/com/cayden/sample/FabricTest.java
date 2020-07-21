@@ -22,7 +22,8 @@ public class FabricTest {
         account = fabricStubFactory.newAccount("fabric_user1", "classpath:accounts/fabric_user1/");
         resourceInfo = new ResourceInfo();
         for (ResourceInfo info : connection.getResources()) {
-            if (info.getName().equals("abac")) {
+            System.out.println("^^^^^^^^^"+info.getName());
+            if (info.getName().equals("mcka")) {
                 resourceInfo = info;
             }
         }
@@ -36,9 +37,72 @@ public class FabricTest {
         System.out.println(blockNumber);
     }
 
-    public static void main(String [] args){
+    public void callTest() throws Exception {
+        String[] result = new String[] {"aaaa","4444444444"};
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setMethod("invoke");
+        transactionRequest.setArgs(result);
+
+        TransactionContext<TransactionRequest> request =
+                new TransactionContext<>(transactionRequest, account, resourceInfo, null);
+
+        byte[] bytes = driver.encodeTransactionRequest(request);
+        TransactionContext<TransactionRequest> requestCmp = driver.decodeTransactionRequest(bytes);
+
+        System.out.println(requestCmp.getData().toString());
+    }
+
+    public void callInvoke() throws Exception {
+        String[] result = new String[] {"aaaa","4444444444"};
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setMethod("invoke");
+        transactionRequest.setArgs(result);
+
+        TransactionContext<TransactionRequest> request =
+                new TransactionContext<>(
+                        transactionRequest, account, resourceInfo, blockHeaderManager);
+
+        TransactionResponse response = driver.sendTransaction(request, connection);
+
+        System.out.println(response.toString());
+    }
+
+
+    public void callGet() throws Exception {
+        String[] result = new String[] {"aaaa"};
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setMethod("query");
+        transactionRequest.setArgs(result);
+
+        TransactionContext<TransactionRequest> request =
+                new TransactionContext<>(
+                        transactionRequest, account, resourceInfo, blockHeaderManager);
+
+        TransactionResponse response = driver.sendTransaction(request, connection);
+
+        System.out.println(response.toString());
+    }
+
+    private TransactionResponse sendOneTransaction() throws Exception {
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setMethod("invoke");
+        transactionRequest.setArgs(new String[] {"a", "b", "10"});
+
+        TransactionContext<TransactionRequest> request =
+                new TransactionContext<>(
+                        transactionRequest, account, resourceInfo, blockHeaderManager);
+
+        TransactionResponse response = driver.sendTransaction(request, connection);
+        System.out.println(response.toString());
+        return response;
+    }
+
+    public static void main(String [] args) throws Exception{
         FabricTest fabricTest=new FabricTest();
         fabricTest.getBlockheight();
+//        fabricTest.callInvoke();
+        fabricTest.callGet();
+//        fabricTest.getBlockheight();
     }
 
     public static class MockBlockHeaderManager implements BlockHeaderManager {
